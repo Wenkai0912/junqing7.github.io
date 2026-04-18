@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>军情七处网 - 野外作业综合管理信息平台</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans SC', '微软雅黑', Arial, sans-serif;
+      font-size: 13px;
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ===== TOP BAR ===== */
+    .top-bar {
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .site-logo {
+      font-size: 22px;
+      font-weight: 700;
+      color: #cc0000;
+      font-family: 'STKaiti', 'KaiTi', serif;
+      line-height: 1;
+    }
+
+    .site-logo-sub {
+      font-size: 9px;
+      color: #cc0000;
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+
+    .logo-divider {
+      width: 1px;
+      height: 36px;
+      background: #ddd;
+    }
+
+    .top-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 1;
+      flex-wrap: wrap;
+    }
+
+    .top-link-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .top-link-item .icon-box {
+      width: 28px;
+      height: 28px;
+      background: #eee;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: #666;
+    }
+
+    .top-link-label {
+      font-size: 11px;
+      color: #333;
+      line-height: 1.3;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      border: 1px solid #cc0000;
+      height: 28px;
+      overflow: hidden;
+      margin-left: auto;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      padding: 0 8px;
+      font-size: 11px;
+      width: 160px;
+      height: 100%;
+      color: #999;
+    }
+
+    .search-box button {
+      background: #cc0000;
+      border: none;
+      color: #fff;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .hot-words {
+      width: 100%;
+      font-size: 11px;
+      color: #666;
+      padding-left: 2px;
+    }
+
+    .hot-words span { color: #cc0000; font-weight: 700; margin-right: 4px; }
+    .hot-words a { color: #333; margin-right: 8px; }
+
+    /* ===== NAV ===== */
+    .main-nav {
+      background: #fff;
+      border-bottom: 2px solid #cc0000;
+    }
+
+    .nav-inner {
+      display: flex;
+      overflow-x: auto;
+    }
+
+    .nav-item {
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #333;
+      cursor: pointer;
+      white-space: nowrap;
+      border-right: 1px solid #eee;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      background: #cc0000;
+      color: #fff;
+    }
+
+    /* ===== RED BANNER ===== */
+    .hero-banner {
+      background: linear-gradient(90deg, #c8102e 0%, #e8381a 40%, #cc6600 100%);
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(255,215,0,0.08) 0%, transparent 70%);
+    }
+
+    .hero-text {
+      font-size: 36px;
+      font-weight: 700;
+      color: #ffd700;
+      letter-spacing: 6px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+      font-family: 'STKaiti', 'KaiTi', 'Noto Serif SC', serif;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== THREE COLUMN LAYOUT ===== */
+    .three-col {
+      display: grid;
+      grid-template-columns: 280px 1fr 200px;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding: 0 8px;
+    }
+
+    /* Left */
+    .col-left {
+      background: #cc0000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+      min-height: 220px;
+    }
+
+    .big-book-title {
+      color: #ffd700;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-align: center;
+      font-family: 'STKaiti', 'KaiTi', serif;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .big-book-vol {
+      color: #ffd700;
+      font-size: 14px;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .book-dots {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .book-dots span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,215,0,0.5);
+    }
+
+    .book-dots span.active { background: #ffd700; }
+
+    .col-left-label {
+      color: #ffecb3;
+      font-size: 11px;
+      margin-top: 4px;
+      text-align: center;
+    }
+
+    .book-links {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .book-link {
+      background: rgba(0,0,0,0.2);
+      color: #ffd700;
+      border: 1px solid rgba(255,215,0,0.4);
+      padding: 3px 8px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    /* Center */
+    .col-center {
+      background: #fff;
+      padding: 10px;
+      min-height: 220px;
+    }
+
+    .news-list { list-style: none; }
+
+    .news-list li {
+      padding: 7px 0;
+      border-bottom: 1px dotted #e0e0e0;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    .news-list li::before {
+      content: '◆';
+      color: #cc0000;
+      font-size: 8px;
+      flex-shrink: 0;
+      position: relative;
+      top: -1px;
+    }
+
+    .news-list li:hover { color: #cc0000; }
+
+    .news-date {
+      color: #999;
+      font-size: 11px;
+      margin-left: auto;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Right */
+    .col-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      align-content: start;
+    }
+
+    .ad-box {
+      background: #cc0000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8px;
+      cursor: pointer;
+      min-height: 80px;
+      overflow: hidden;
+    }
+
+    .ad-box-text {
+      color: #ffd700;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      line-height: 1.5;
+      font-family: 'STKaiti', 'KaiTi', serif;
+    }
+
+    /* ===== BOTTOM LINKS BAR ===== */
+    .bottom-links-bar {
+      background: #fff;
+      border-top: 2px solid #cc0000;
+      border-bottom: 1px solid #ddd;
+      padding: 8px 10px;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      margin: 0 8px;
+      flex-wrap: wrap;
+    }
+
+    .bottom-link {
+      padding: 4px 12px;
+      font-size: 12px;
+      color: #333;
+      border-right: 1px solid #ddd;
+      white-space: nowrap;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .bottom-link:first-child { padding-left: 0; }
+    .bottom-link:hover { color: #cc0000; }
+    .bottom-link span { color: #cc0000; font-weight: 700; margin-right: 3px; }
+
+    /* ===== FOOTER ===== */
+    .site-footer {
+      background: #1a1a1a;
+      color: #888;
+      text-align: center;
+      padding: 12px;
+      font-size: 11px;
+      margin-top: 16px;
+      line-height: 2;
+    }
+
+    .site-footer a { color: #666; margin: 0 6px; }
+    .site-footer a:hover { color: #cc0000; }
+
+    /* ===== FLOATING AD ===== */
+    .float-ad {
+      position: fixed;
+      bottom: 60px;
+      right: 20px;
+      width: 220px;
+      background: #fff;
+      border: 2px solid #cc0000;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+      z-index: 9999;
+      animation: floatBounce 3s ease-in-out infinite;
+    }
+
+    @keyframes floatBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .float-ad-header {
+      background: #cc0000;
+      color: #ffd700;
+      font-size: 11px;
+      padding: 4px 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .float-ad-close {
+      background: none;
+      border: 1px solid #ffd700;
+      color: #ffd700;
+      width: 16px;
+      height: 16px;
+      font-size: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      padding: 0;
+      font-family: monospace;
+    }
+
+    .float-ad-body {
+      background: linear-gradient(135deg, #8b0000, #cc3300);
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .float-ad-title {
+      color: #ffd700;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      font-family: 'STKaiti', 'KaiTi', serif;
+      line-height: 1.6;
+      margin-bottom: 6px;
+    }
+
+    .float-ad-sub {
+      color: #ffecb3;
+      font-size: 10px;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .float-ad-btn {
+      background: #ffd700;
+      color: #8b0000;
+      border: none;
+      padding: 4px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 1px;
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+
+    .float-ad-blink {
+      display: inline-block;
+      animation: blink 1.2s step-end infinite;
+      color: #ffd700;
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ===== PHOTO CAROUSEL ===== */
+    .section-title-bar {
+      background: #fff;
+      border-left: 4px solid #cc0000;
+      padding: 8px 12px;
+      margin: 10px 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .section-title-bar h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #333;
+      letter-spacing: 1px;
+    }
+
+    .section-title-bar .more-link {
+      font-size: 11px;
+      color: #999;
+      cursor: pointer;
+    }
+
+    .section-title-bar .more-link:hover { color: #cc0000; }
+
+    .carousel-wrapper {
+      margin: 0 8px 10px;
+      background: #fff;
+      padding: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .photo-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid #eee;
+      aspect-ratio: 4/3;
+      background: #f0f0f0;
+    }
+
+    .photo-card .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      color: #ccc;
+      background: linear-gradient(135deg, #f8f8f8, #e8e8e8);
+      transition: transform 0.3s;
+    }
+
+    .photo-card:hover .photo-placeholder {
+      transform: scale(1.05);
+    }
+
+    .photo-card .photo-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      color: #fff;
+      font-size: 11px;
+      padding: 16px 6px 5px;
+      text-align: center;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px;
+      height: 32px;
+      background: rgba(204,0,0,0.8);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .carousel-btn:hover { background: #cc0000; }
+    .carousel-btn.prev { left: 8px; }
+    .carousel-btn.next { right: 8px; }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .carousel-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ddd;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .carousel-dots span.active { background: #cc0000; }
+
+    /* ===== MEMBER SHOWCASE ===== */
+    .member-grid {
+      margin: 0 8px 10px;
+      background: #fff;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    .member-card {
+      background: #fff;
+      border: 1px solid #eee;
+      padding: 14px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s;
+      position: relative;
+    }
+
+    .member-card:hover {
+      box-shadow: 0 4px 12px rgba(204,0,0,0.15);
+      transform: translateY(-2px);
+    }
+
+    .member-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin: 0 auto 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: #fff;
+      font-weight: 700;
+      font-family: 'STKaiti', 'KaiTi', serif;
+    }
+
+    .member-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 3px;
+    }
+
+    .member-title {
+      font-size: 10px;
+      color: #999;
+      margin-bottom: 6px;
+    }
+
+    .member-badge {
+      display: inline-block;
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 2px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .member-stats {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 6px;
+      font-size: 10px;
+      color: #999;
+    }
+
+    .member-stats span strong {
+      color: #cc0000;
+      font-size: 13px;
+      display: block;
+    }
+
+    /* ===== NEWS MODAL ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-overlay.show { display: flex; }
+
+    .modal-box {
+      background: #fff;
+      width: 600px;
+      max-width: 90vw;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+      animation: modalIn 0.25s ease;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-header {
+      background: #cc0000;
+      color: #fff;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h4 {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .modal-close {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.5);
+      color: #fff;
+      width: 24px;
+      height: 24px;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+    }
+
+    .modal-close:hover { background: rgba(255,255,255,0.15); }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    .modal-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 11px;
+      color: #999;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .modal-meta span { display: flex; align-items: center; gap: 4px; }
+
+    .modal-content {
+      font-size: 13px;
+      color: #444;
+      line-height: 1.9;
+    }
+
+    .modal-content p { margin-bottom: 10px; }
+
+    .modal-footer {
+      padding: 10px 20px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #eee;
+    }
+
+    .modal-tag {
+      font-size: 10px;
+      background: #fff3cd;
+      color: #856404;
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+
+    .modal-share-btn {
+      font-size: 11px;
+      color: #cc0000;
+      cursor: pointer;
+      border: 1px solid #cc0000;
+      background: #fff;
+      padding: 3px 10px;
+    }
+
+    .modal-share-btn:hover { background: #cc0000; color: #fff; }
+  </style>
+</head>
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<div class="top-bar">
+  <div class="logo-area">
+    <div>
+      <div class="site-logo">军情七处网</div>
+      <div class="site-logo-sub">WWW.MI7OPS.CN</div>
+    </div>
+    <div class="logo-divider"></div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <div style="border:1px solid #cc0000;padding:3px 6px;font-size:10px;color:#cc0000;font-weight:700;line-height:1.3;text-align:center;">全国野外<br>作业联盟</div>
+      <div style="background:#cc0000;padding:4px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div style="color:#ffd700;font-size:11px;font-weight:700;">军情七处</div>
+        <div style="color:#ffecb3;font-size:9px;">手机报</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="top-links">
+    <div class="top-link-item">
+      <div class="icon-box">📞</div>
+      <div class="top-link-label">全体成员<br>紧急联络</div>
+    </div>
+    <div class="top-link-item">
+      <div class="icon-box">📺</div>
+      <div class="top-link-label">野外作业<br>视频档案</div>
+    </div>
+    <div class="top-link-item">
+      <div class="icon-box">💬</div>
+      <div class="top-link-label">军情七处<br>内部群</div>
+    </div>
+  </div>
+
+  <div style="margin-left:auto;display:flex;flex-direction:column;gap:4px;">
+    <div class="search-box">
+      <input type="text" placeholder="搜索作战档案" />
+      <button>🔍</button>
+    </div>
+    <div class="hot-words">
+      <span>最新</span><span>热搜</span>
+      <a href="#">第七次作战任务圆满完成</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MAIN NAV ===== -->
+<div class="main-nav">
+  <div class="nav-inner">
+    <div class="nav-item active">组织工作</div>
+    <div class="nav-item">成员教育</div>
+    <div class="nav-item">思想建设</div>
+    <div class="nav-item">处规处纪</div>
+    <div class="nav-item">光荣历史</div>
+    <div class="nav-item">先进典型</div>
+    <div class="nav-item">野外培训</div>
+    <div class="nav-item">观摩交流</div>
+    <div class="nav-item">任务档案</div>
+    <div class="nav-item">后勤保障</div>
+    <div class="nav-item">处务问答</div>
+    <div class="nav-item">先锋汇报</div>
+  </div>
+</div>
+
+<!-- ===== HERO BANNER ===== -->
+<div class="hero-banner">
+  <!-- 改这里可以换横幅标语 -->
+  <div class="hero-text">艰苦奋斗 · 开拓进取 · 说走就走</div>
+</div>
+
+<!-- ===== THREE COLUMN ===== -->
+<div class="three-col">
+
+  <!-- 左栏：大封面 -->
+  <div class="col-left">
+    <!-- 改这里换封面内容 -->
+    <div class="big-book-title">军情七处野外<br>作战手册</div>
+    <div class="big-book-vol">第七卷</div>
+    <div class="book-dots">
+      <span class="active"></span><span></span><span></span>
+    </div>
+    <div class="col-left-label">《七处野外作战手册》第七卷</div>
+    <div style="height:10px;"></div>
+    <div style="display:flex;align-items:center;gap:6px;color:#ffd700;font-size:13px;font-weight:700;">
+      <span style="font-size:20px;font-family:serif;">学习</span>
+      <div>
+        <div>七处精神与野外实践</div>
+        <div style="font-size:10px;color:#ffecb3;font-weight:400;">思想体系｜重要讲话｜活动报道｜图书｜解析</div>
+      </div>
+    </div>
+    <div class="book-links">
+      <div class="book-link">处长著作选读</div>
+      <div class="book-link">野外手册（第七卷）</div>
+      <div class="book-link">学习纲要（2025版）</div>
+    </div>
+  </div>
+
+  <!-- 中栏：新闻列表（在这里添加你们的出行记录） -->
+  <div class="col-center">
+    <ul class="news-list">
+      <!-- 点击每条可弹出详情，修改 data-id 对应下方 newsData 的内容 -->
+      <li onclick="openNews(0)">队长：本次特别野外做饭行动圆满完成，全体成员辛苦了<span class="news-date">11-03</span></li>
+      <li onclick="openNews(1)">组织通报：关于第二次野外任务的情况说明<span class="news-date">11-03</span></li>
+      <li onclick="openNews(2)">为军情七处提供坚强后勤保障——关于下次露营装备采购的若干意见<span class="news-date">10-28</span></li>
+      <li onclick="openNews(3)">黄思成的野外情怀｜"走出一条属于七处的户外新路子"<span class="news-date">10-15</span></li>
+      <li onclick="openNews(4)">军情七处第8至12次任务选址方案及可行性研究报告<span class="news-date">09-30</span></li>
+      <li onclick="openNews(5)">关于进一步加强野外后勤保障、禁止忘带水的若干规定<span class="news-date">09-21</span></li>
+      <li onclick="openNews(6)">学习贯彻第七次任务精神　成员培训课程<span class="news-date">09-10</span></li>
+      <li onclick="openNews(7)">《建议》辅导读本电子书　学习辅导百问电子书<span class="news-date">08-20</span></li>
+      <li onclick="openNews(8)">《最佳路线TOP10》专题节目　▶ 《最佳路线》微视频<span class="news-date">08-10</span></li>
+      <li onclick="openNews(9)">党旗飘扬｜七处旗帜在大自然一线高高飘扬<span class="news-date">07-06</span></li>
+    </ul>
+  </div>
+
+  <!-- 右栏：广告格 -->
+  <div class="col-right">
+    <div class="ad-box" style="grid-column:span 2;background:linear-gradient(135deg,#8b0000,#cc0000);">
+      <div class="ad-box-text">艰苦奋斗<br>开拓进取<br>正确户外观</div>
+    </div>
+    <div class="ad-box" style="background:linear-gradient(135deg,#6a0000,#aa1a00);">
+      <div class="ad-box-text" style="font-size:10px;">乡村级以下成员<br>学习贯彻第七次<br>任务精神<br>培训课程</div>
+    </div>
+    <div class="ad-box" style="background:linear-gradient(135deg,#1a1a3a,#2a2a5a);">
+      <div class="ad-box-text" style="color:#88aaff;font-size:10px;">七处创新理论<br>学习词典</div>
+    </div>
+    <div class="ad-box" style="background:linear-gradient(135deg,#003300,#006600);">
+      <div class="ad-box-text" style="font-size:11px;">七处旗帜<br>在野外一线<br>高高飘扬</div>
+    </div>
+    <div class="ad-box" style="background:#cc0000;">
+      <div class="ad-box-text" style="font-size:10px;">学习强处<br>APP下载</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== PHOTO CAROUSEL（活动相册，替换占位图为真实照片） ===== -->
+<div class="section-title-bar">
+  <h3>野外作业影像档案</h3>
+  <span class="more-link">查看全部相册 &gt;</span>
+</div>
+<div class="carousel-wrapper">
+  <button class="carousel-btn prev" onclick="moveCarousel(-1)">&lt;</button>
+  <button class="carousel-btn next" onclick="moveCarousel(1)">&gt;</button>
+  <div class="carousel-track" id="carouselTrack">
+    <!-- 第一页 — 图片放在 photos/carousel/ 文件夹 -->
+    <div class="carousel-slide">
+      <div class="photo-card">
+        <!-- 替换图片：photos/carousel/01-mountain.jpg -->
+        <img src="photos/carousel/01-mountain.jpg" alt="山顶合影" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="photo-placeholder" style="display:none;">&#127957;<br><span style="font-size:9px;color:#aaa;">01-mountain.jpg</span></div>
+        <div class="photo-label">第七次任务 · 山顶合影</div>
+      </div>
+      <div class="photo-card">
+        <!-- 替换图片：photos/carousel/02-cooking.jpg -->
+        <img src="photos/carousel/02-cooking.jpg" alt="大锅饭" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="photo-placeholder" style="display:none;">&#127869;<br><span style="font-size:9px;color:#aaa;">02-cooking.jpg</span></div>
+        <div class="photo-label">野外做饭行动 · 大锅饭</div>
+      </div>
+      <div class="photo-card">
+        <!-- 替换图片：photos/carousel/03-camping.jpg -->
+        <img src="photos/carousel/03-camping.jpg" alt="露营夜景" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="photo-placeholder" style="display:none;">&#9978;<br><span style="font-size:9px;color:#aaa;">03-camping.jpg</span></div>
+        <div class="photo-label">露营基地 · 夜景</div>
+      </div>
+      <div class="photo-card">
+        <!-- 替换图片：photos/carousel/04-hiking.jpg -->
+        <img src="photos/carousel/04-hiking.jpg" alt="森林小道" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="photo-placeholder" style="display:none;">&#127796;<br><span style="font-size:9px;color:#aaa;">04-hiking.jpg</span></div>
+        <div class="photo-label">徒步穿越 · 森林小道</div>
+      </div>
+    </div>
+    <!-- 第二页 -->
+    <div class="carousel-slide">
+      <div class="photo-card">
+        <!-- 替换图片：photos/carousel/05-sunrise.jpg -->
+        <img src="photos/carousel/05-sunrise.jpg" alt="日出" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="photo-placeholder" style="display:none;">&#127754;<br><span style="font-size:9px;color:#aaa;">05-sunrise.jpg</span></div>
+        <div class="photo-label">日出观赏 · 东峰</div>
+      </div>
+      <div class="photo-card">
+        <!-- 替换图片：photos/carousel/06-bonfire.jpg -->
+        <img src="photos/carousel/06-bonfire.jpg" alt="篝火" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="photo-placeholder" style="display:none;">&#128293;<br><span style="font-size:9px;color:#aaa;">06-bonfire.jpg</span></div>
+        <div class="photo-label">篝火晚会 · 团建之夜</div>
+      </div>
+      <div class="photo-card">
+        <!-- 替换图片：photos/carousel/07-fishing.jpg -->
+        <img src="photos/carousel/07-fishing.jpg" alt="钓鱼" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="photo-placeholder" style="display:none;">&#127907;<br><span style="font-size:9px;color:#aaa;">07-fishing.jpg</span></div>
+        <div class="photo-label">钓鱼比赛 · 谁是鱼王</div>
+      </div>
+      <div class="photo-card">
+        <!-- 替换图片：photos/carousel/08-creek.jpg -->
+        <img src="photos/carousel/08-creek.jpg" alt="溪边" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="photo-placeholder" style="display:none;">&#9968;<br><span style="font-size:9px;color:#aaa;">08-creek.jpg</span></div>
+        <div class="photo-label">溪边戏水 · 清凉一夏</div>
+      </div>
+    </div>
+    <!-- 第三页 -->
+    <div class="carousel-slide">
+      <div class="photo-card">
+        <!-- 替换图片：photos/carousel/09-gear.jpg -->
+        <img src="photos/carousel/09-gear.jpg" alt="装备" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="photo-placeholder" style="display:none;">&#128507;<br><span style="font-size:9px;color:#aaa;">09-gear.jpg</span></div>
+        <div class="photo-label">装备展示 · 后勤保障</div>
+      </div>
+      <div class="photo-card">
+        <!-- 替换图片：photos/carousel/10-stars.jpg -->
+        <img src="photos/carousel/10-stars.jpg" alt="星空" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="photo-placeholder" style="display:none;">&#127748;<br><span style="font-size:9px;color:#aaa;">10-stars.jpg</span></div>
+        <div class="photo-label">星空摄影 · 银河璀璨</div>
+      </div>
+      <div class="photo-card">
+        <!-- 替换图片：photos/carousel/11-training.jpg -->
+        <img src="photos/carousel/11-training.jpg" alt="拉练" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="photo-placeholder" style="display:none;">&#128694;<br><span style="font-size:9px;color:#aaa;">11-training.jpg</span></div>
+        <div class="photo-label">晨间拉练 · 体能训练</div>
+      </div>
+      <div class="photo-card">
+        <!-- 替换图片：photos/carousel/12-award.jpg -->
+        <img src="photos/carousel/12-award.jpg" alt="颁奖" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="photo-placeholder" style="display:none;">&#127942;<br><span style="font-size:9px;color:#aaa;">12-award.jpg</span></div>
+        <div class="photo-label">颁奖典礼 · 先进表彰</div>
+      </div>
+    </div>
+  </div>
+  <div class="carousel-dots" id="carouselDots">
+    <span class="active" onclick="goToSlide(0)"></span>
+    <span onclick="goToSlide(1)"></span>
+    <span onclick="goToSlide(2)"></span>
+  </div>
+</div>
+
+<!-- ===== MEMBER SHOWCASE（成员展示区，修改姓名/角色/头像颜色） ===== -->
+<div class="section-title-bar">
+  <h3>七处核心成员</h3>
+  <span class="more-link">查看全部成员 &gt;</span>
+</div>
+<div class="member-grid">
+  <!-- 成员1 — 头像：photos/members/chuzhang.jpg -->
+  <div class="member-card">
+    <img src="photos/members/chuzhang.jpg" alt="处长" style="width:60px;height:60px;border-radius:50%;object-fit:cover;margin:0 auto 8px;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+    <div class="member-avatar" style="background:linear-gradient(135deg,#cc0000,#ff4444);display:none;">处</div>
+    <div class="member-name">处长大人</div>
+    <div class="member-title">最高指挥官</div>
+    <div class="member-badge" style="background:#fff3cd;color:#856404;">创始元老</div>
+    <div class="member-stats">
+      <span>出勤<strong>7</strong></span>
+      <span>功勋<strong>12</strong></span>
+    </div>
+  </div>
+  <!-- 成员2 — 头像：photos/members/huangsicheng.jpg -->
+  <div class="member-card">
+    <img src="photos/members/huangsicheng.jpg" alt="黄思成" style="width:60px;height:60px;border-radius:50%;object-fit:cover;margin:0 auto 8px;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+    <div class="member-avatar" style="background:linear-gradient(135deg,#1a5276,#2e86c1);display:none;">黄</div>
+    <div class="member-name">黄思成</div>
+    <div class="member-title">首席探路官</div>
+    <div class="member-badge" style="background:#d4edda;color:#155724;">先进典型</div>
+    <div class="member-stats">
+      <span>出勤<strong>7</strong></span>
+      <span>功勋<strong>9</strong></span>
+    </div>
+  </div>
+  <!-- 成员3 — 头像：photos/members/zhang.jpg -->
+  <div class="member-card">
+    <img src="photos/members/zhang.jpg" alt="张同志" style="width:60px;height:60px;border-radius:50%;object-fit:cover;margin:0 auto 8px;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+    <div class="member-avatar" style="background:linear-gradient(135deg,#6c3483,#a569bd);display:none;">张</div>
+    <div class="member-name">张同志</div>
+    <div class="member-title">后勤部长</div>
+    <div class="member-badge" style="background:#cce5ff;color:#004085;">保障标兵</div>
+    <div class="member-stats">
+      <span>出勤<strong>6</strong></span>
+      <span>功勋<strong>8</strong></span>
+    </div>
+  </div>
+  <!-- 成员4 — 头像：photos/members/li.jpg -->
+  <div class="member-card">
+    <img src="photos/members/li.jpg" alt="李同志" style="width:60px;height:60px;border-radius:50%;object-fit:cover;margin:0 auto 8px;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+    <div class="member-avatar" style="background:linear-gradient(135deg,#1e8449,#27ae60);display:none;">李</div>
+    <div class="member-name">李同志</div>
+    <div class="member-title">野炊大厨</div>
+    <div class="member-badge" style="background:#f8d7da;color:#721c24;">厨艺担当</div>
+    <div class="member-stats">
+      <span>出勤<strong>5</strong></span>
+      <span>功勋<strong>7</strong></span>
+    </div>
+  </div>
+  <!-- 成员5 — 头像：photos/members/wang.jpg -->
+  <div class="member-card">
+    <img src="photos/members/wang.jpg" alt="王同志" style="width:60px;height:60px;border-radius:50%;object-fit:cover;margin:0 auto 8px;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+    <div class="member-avatar" style="background:linear-gradient(135deg,#d35400,#e67e22);display:none;">王</div>
+    <div class="member-name">王同志</div>
+    <div class="member-title">摄影记者</div>
+    <div class="member-badge" style="background:#e2e3e5;color:#383d41;">影像先锋</div>
+    <div class="member-stats">
+      <span>出勤<strong>6</strong></span>
+      <span>功勋<strong>6</strong></span>
+    </div>
+  </div>
+  <!-- 成员6 — 头像：photos/members/zhao.jpg -->
+  <div class="member-card">
+    <img src="photos/members/zhao.jpg" alt="赵同志" style="width:60px;height:60px;border-radius:50%;object-fit:cover;margin:0 auto 8px;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+    <div class="member-avatar" style="background:linear-gradient(135deg,#2c3e50,#34495e);display:none;">赵</div>
+    <div class="member-name">赵同志</div>
+    <div class="member-title">装备管理员</div>
+    <div class="member-badge" style="background:#fff3cd;color:#856404;">新晋成员</div>
+    <div class="member-stats">
+      <span>出勤<strong>3</strong></span>
+      <span>功勋<strong>4</strong></span>
+    </div>
+  </div>
+  <!-- 成员7 — 头像：photos/members/xinzihan.jpg -->
+  <div class="member-card">
+    <img src="photos/members/xinzihan.jpg" alt="信子涵" style="width:60px;height:60px;border-radius:50%;object-fit:cover;margin:0 auto 8px;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+    <div class="member-avatar" style="background:linear-gradient(135deg,#922b21,#cb4335);display:none;">信</div>
+    <div class="member-name">信子涵</div>
+    <div class="member-title">技术总监</div>
+    <div class="member-badge" style="background:#d4edda;color:#155724;">网站建设者</div>
+    <div class="member-stats">
+      <span>出勤<strong>7</strong></span>
+      <span>功勋<strong>10</strong></span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BOTTOM LINKS BAR ===== -->
+<div class="bottom-links-bar">
+  <div class="bottom-link"><span>军情七处</span></div>
+  <div class="bottom-link">处章</div>
+  <div class="bottom-link">处徽｜处旗｜誓词</div>
+  <div class="bottom-link">统计公报</div>
+  <div class="bottom-link">思想理论</div>
+  <div class="bottom-link">处内法规</div>
+  <div class="bottom-link">领导机构</div>
+  <div class="bottom-link">全处代表大会</div>
+  <div class="bottom-link">中全会</div>
+  <div class="bottom-link">政治局会议</div>
+  <div class="bottom-link">集体学习</div>
+  <div class="bottom-link">军情七处宣言</div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="site-footer">
+  <div>
+    <a href="#">七处共产党</a>
+    <a href="#">处章</a>
+    <a href="#">处徽｜处旗｜誓词</a>
+    <a href="#">统计公报</a>
+    <a href="#">思想理论</a>
+    <a href="#">处内法规</a>
+    <a href="#">领导机构</a>
+    <a href="#">全处代表大会</a>
+  </div>
+  <div style="margin-top:6px;color:#555;">
+    军情七处野外作业综合管理信息平台 版权所有 © 2025
+  </div>
+  <div style="font-size:10px;color:#444;margin-top:2px;">
+    备案号：信子涵网ICP备25000007号 ｜ 公不安机关备案：多公网安字第00000007号
+  </div>
+</div>
+
+<!-- ===== FLOATING AD（右下角弹窗） ===== -->
+<div class="float-ad" id="floatAd">
+  <div class="float-ad-header">
+    <span>×关闭</span>
+    <button class="float-ad-close" onclick="document.getElementById('floatAd').style.display='none'">×</button>
+  </div>
+  <div class="float-ad-body">
+    <!-- 改这里换弹窗内容 -->
+    <div class="float-ad-title">乡科级以下成员<br>学习贯彻第七次<br>任务精神<br>培训课程</div>
+    <div class="float-ad-sub">——军情七处教育培训中心</div>
+    <button class="float-ad-btn">立即报名</button>
+    <div><span class="float-ad-blink">▶ 点击了解详情</span></div>
+  </div>
+</div>
+
+<!-- ===== NEWS MODAL ===== -->
+<div class="modal-overlay" id="newsModal" onclick="if(event.target===this)closeNews()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h4 id="modalTitle">标题</h4>
+      <button class="modal-close" onclick="closeNews()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta">
+        <span id="modalDate">日期</span>
+        <span id="modalAuthor">作者</span>
+        <span id="modalViews">阅读量</span>
+      </div>
+      <div class="modal-content" id="modalContent">正文</div>
+    </div>
+    <div class="modal-footer">
+      <span class="modal-tag" id="modalTag">标签</span>
+      <button class="modal-share-btn" onclick="alert('已复制链接！可分享给其他成员')">分享此文</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== 新闻详情数据（在这里编辑每条新闻的内容） =====
+  var newsData = [
+    {
+      title: '队长：本次特别野外做饭行动圆满完成，全体成员辛苦了',
+      date: '2025-11-03',
+      author: '处长办公室',
+      views: 328,
+      tag: '处长讲话',
+      content: '<p>各位同志们：</p><p>经过全体成员的共同努力，本次"特别野外做饭行动"已于11月3日圆满完成。此次行动历时两天一夜，全处7名成员悉数到齐，充分展现了军情七处"说走就走"的优良作风。</p><p>本次行动亮点如下：李同志的红烧肉获全票好评；后勤保障零失误，无人忘带水（这是历史性突破）；篝火晚会圆满举行，全员参与度100%。</p><p>望各位同志再接再厉，为下一次野外任务做好充分准备！</p>'
+    },
+    {
+      title: '组织通报：关于第二次野外任务的情况说明',
+      date: '2025-11-03',
+      author: '组织纪检部',
+      views: 256,
+      tag: '组织通报',
+      content: '<p>根据《军情七处野外任务管理条例》有关规定，现将第二次野外任务情况通报如下：</p><p>一、任务概况：第二次野外任务于10月中旬执行，目的地为XX山区，参与成员5人。</p><p>二、任务成果：成功完成徒步路线勘察、营地搭建演练及野外炊事训练三项核心任务。</p><p>三、存在问题：部分成员装备准备不充分，建议后续加强行前检查。</p><p>特此通报。</p>'
+    },
+    {
+      title: '为军情七处提供坚强后勤保障——关于下次露营装备采购的若干意见',
+      date: '2025-10-28',
+      author: '后勤保障部',
+      views: 189,
+      tag: '后勤保障',
+      content: '<p>为确保下次野外任务顺利开展，经后勤保障部研究，提出以下装备采购建议：</p><p>一、急需采购清单：防潮垫×3（旧款已严重老化）、头灯×2（上次有人摸黑绊倒）、便携炉头×1（备用）。</p><p>二、建议升级项目：帐篷由3人帐升级为4人帐，提升居住舒适度；新增折叠桌椅一套，告别"蹲着吃饭"的历史。</p><p>三、经费预算：总计约￥850，建议由全体成员AA分摊。</p><p>请各位成员于本周内反馈意见。</p>'
+    },
+    {
+      title: '黄思成的野外情怀｜"走出一条属于七处的户外新路子"',
+      date: '2025-10-15',
+      author: '宣传部',
+      views: 412,
+      tag: '先进典型',
+      content: '<p>"每次走进大自然，我都觉得这才是生活本来的样子。"——黄思成如是说。</p><p>作为军情七处的首席探路官，黄思成同志自创处以来从未缺席任何一次野外任务，出勤率100%。他负责所有路线的前期勘察与规划，常常独自提前踩点，只为给大家找到最佳路线。</p><p>在第五次任务中，正是他临时发现的溪边捷径，让全队避开了暴雨区域，被队长称赞为"七处的眼睛"。</p><p>谈到未来规划，黄思成表示希望带领七处挑战更多元化的户外项目，"不只是徒步露营，攀岩、溯溪、星空摄影，我们都可以试试。"</p>'
+    },
+    {
+      title: '军情七处第8至12次任务选址方案及可行性研究报告',
+      date: '2025-09-30',
+      author: '战略规划部',
+      views: 167,
+      tag: '任务规划',
+      content: '<p>根据全处成员投票及实际调研，现公布第8至12次任务备选方案：</p><p>第8次：银杏谷秋色徒步（11月中旬，难度★★，适合全员）</p><p>第9次：温泉+轻徒步（12月，难度★，冬季休闲型）</p><p>第10次：雪山观景露营（次年1月，难度★★★，需提前体能训练）</p><p>第11次：海岛露营+赶海（次年3月，难度★★，需协调交通）</p><p>第12次：古道穿越两日行（次年4月，难度★★★，经典路线）</p><p>各成员可在内部群投票选择优先执行顺序。</p>'
+    },
+    {
+      title: '关于进一步加强野外后勤保障、禁止忘带水的若干规定',
+      date: '2025-09-21',
+      author: '处规处纪委员会',
+      views: 521,
+      tag: '处规处纪',
+      content: '<p>鉴于近期多次任务中出现成员忘带饮用水的情况（没错，说的就是你），严重影响了任务执行效率和团队士气，经处务委员会研究决定，特制定以下规定：</p><p>第一条：每次任务出发前24小时，各成员须在群内发送装备清单自查照片。</p><p>第二条：饮用水为强制携带物资，每人最低标准1.5升/天。</p><p>第三条：忘带水者，罚款请全处喝奶茶一次。</p><p>第四条：连续两次忘带者，取消下次任务"选菜权"。</p><p>本规定自发布之日起执行，最终解释权归处长所有。</p>'
+    },
+    {
+      title: '学习贯彻第七次任务精神　成员培训课程',
+      date: '2025-09-10',
+      author: '教育培训中心',
+      views: 143,
+      tag: '培训教育',
+      content: '<p>为深入学习第七次野外任务的宝贵经验，教育培训中心特开设以下课程：</p><p>课程一：《帐篷搭建的艺术与科学》——如何在5分钟内完成扎营（主讲：张同志）</p><p>课程二：《野外炊事实战指南》——从生火到出菜的全流程（主讲：李同志）</p><p>课程三：《户外摄影构图技巧》——用手机拍出大片感（主讲：王同志）</p><p>课程四：《紧急情况处置预案》——迷路、受伤、天气突变怎么办（主讲：处长）</p><p>培训时间另行通知，全员必修。</p>'
+    },
+    {
+      title: '《建议》辅导读本电子书　学习辅导百问电子书',
+      date: '2025-08-20',
+      author: '学习材料编辑组',
+      views: 98,
+      tag: '学习资料',
+      content: '<p>为帮助全体成员系统学习户外知识，编辑组精心整理了两本电子书：</p><p>《关于提升野外生存能力的若干建议》辅导读本：涵盖导航、急救、食物辨识、天气判断等核心技能，共12章，图文并茂。</p><p>《野外作业百问百答》：收集了成员们最常提出的100个问题，从"帐篷漏水怎么办"到"如何优雅地在野外上厕所"，无所不包。</p><p>电子书已上传至内部群文件，请各位同志自行下载学习。</p>'
+    },
+    {
+      title: '《最佳路线TOP10》专题节目　▶ 《最佳路线》微视频',
+      date: '2025-08-10',
+      author: '影像宣传部',
+      views: 376,
+      tag: '视频专题',
+      content: '<p>由影像宣传部精心制作的《最佳路线TOP10》专题节目正式上线！</p><p>本期精选了军情七处成立以来走过的10条最佳户外路线，配以王同志的精彩航拍画面和处长的深情旁白，全长15分钟。</p><p>TOP3抢先看：</p><p>第3名：银杏古道晨雾穿越——"仿佛走进了水墨画"</p><p>第2名：高山草甸日落露营——"那个黄昏我们谁都没说话"</p><p>第1名：溪谷探秘+瀑布野餐——"七处的高光时刻"</p><p>完整视频已发布至内部群，欢迎转发（仅限处内）。</p>'
+    },
+    {
+      title: '党旗飘扬｜七处旗帜在大自然一线高高飘扬',
+      date: '2025-07-06',
+      author: '宣传部',
+      views: 287,
+      tag: '精神文明',
+      content: '<p>在刚刚结束的第六次野外任务中，军情七处的定制旗帜首次亮相！</p><p>这面印有"军情七处"字样和处徽的红色旗帜，由信子涵同志设计，全体成员投票通过。旗帜在山顶迎风飘扬的那一刻，所有成员齐声欢呼。</p><p>处长表示："这面旗帜代表的不只是一个名字，更是我们七个人一起走过山川湖海的情谊。无论走到哪里，只要旗帜飘扬，七处精神就在。"</p><p>后续计划在每次任务中都携带旗帜，并在各打卡点留下"旗帜到此一游"系列合影。</p>'
+    }
+  ];
+
+  function openNews(index) {
+    var d = newsData[index];
+    document.getElementById('modalTitle').textContent = d.title;
+    document.getElementById('modalDate').innerHTML = '&#128197; ' + d.date;
+    document.getElementById('modalAuthor').innerHTML = '&#9998; ' + d.author;
+    document.getElementById('modalViews').innerHTML = '&#128065; ' + d.views + ' 次阅读';
+    document.getElementById('modalContent').innerHTML = d.content;
+    document.getElementById('modalTag').textContent = d.tag;
+    document.getElementById('newsModal').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeNews() {
+    document.getElementById('newsModal').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeNews();
+  });
+
+  // 轮播功能
+  let currentSlide = 0;
+  const totalSlides = 3;
+
+  function moveCarousel(dir) {
+    currentSlide = (currentSlide + dir + totalSlides) % totalSlides;
+    updateCarousel();
+  }
+
+  function goToSlide(index) {
+    currentSlide = index;
+    updateCarousel();
+  }
+
+  function updateCarousel() {
+    document.getElementById('carouselTrack').style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+    var dots = document.querySelectorAll('#carouselDots span');
+    dots.forEach(function(d, i) {
+      d.className = i === currentSlide ? 'active' : '';
+    });
+  }
+
+  // 自动轮播（每5秒切换）
+  setInterval(function() { moveCarousel(1); }, 5000);
+</script>
+
+</body>
+</html>
